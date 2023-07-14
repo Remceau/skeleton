@@ -41,4 +41,4 @@ fi
 
 # Enable rendering of bashprompt
 export BASHPROMPT_NO_STATUSBAR=1
-source /data/bashprompt/prompt
+source ~/.bashprompt/prompt
