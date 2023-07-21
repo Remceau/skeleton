@@ -31,14 +31,30 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# Install or update bashprompt
-if [ ! -d ~/.bashprompt ]
-then
-    git clone https://github.com/Remceau/bashprompt.git ~/.bashprompt
-else
-    git -C ~/.bashprompt pull
-fi
+# Setup bash prompt
+__promptline__() {
+    # Status code
+    if [ $? -eq 0 ]
+    then
+        color=43
+    else
+        color=161
+    fi
+    # Host information
+    if [ -n "$WSLENV" ]
+    then
+        info="\[$(tput setaf 242)\]\u@\H.wsl"
+    else
+        info="\[$(tput setaf 242)\]\u@\H"
+    fi
+    # Folder information
+    if [ -d ".git" ]
+    then
+        folder="\[$(tput setaf $color)\]\w \[$(tput setaf 242)\]git:$(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
+    else
+        folder="\[$(tput setaf $color)\]\w"
+    fi
 
-# Enable rendering of bashprompt
-export BASHPROMPT_NO_STATUSBAR=1
-source ~/.bashprompt/prompt
+    PS1="$info $folder \[$(tput sgr0)\]$ "
+}
+PROMPT_COMMAND=__promptline__
