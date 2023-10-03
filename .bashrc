@@ -41,12 +41,7 @@ __promptline__() {
         color=161
     fi
     # Host information
-    if [ -n "$WSLENV" ]
-    then
-        info="\[$(tput setaf 242)\]\u@\H.wsl"
-    else
-        info="\[$(tput setaf 242)\]\u@\H"
-    fi
+    info="\[$(tput setaf 242)\]\u@\H"
     # Folder information
     if [ -d ".git" ]
     then
